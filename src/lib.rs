@@ -398,10 +398,7 @@ impl WriteRequest {
 mod tests {
     use super::*;
     use pretty_assertions::assert_eq;
-    use prometheus::{
-        histogram_opts, register_histogram, Counter, Gauge, Histogram, HistogramOpts, Opts,
-        Registry,
-    };
+    use prometheus::{histogram_opts, Counter, Gauge, Histogram, Registry};
 
     #[test]
     pub fn can_encode_counter() {
