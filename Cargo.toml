@@ -1,0 +1,20 @@
+[package]
+name = "prometheus-reqwest-remote-write"
+version = "0.1.0"
+edition = "2021"
+authors = ["Christopher Kolstad <chriswk@getunleash.io>"]
+description = "A prometheus remote write client for reqwest"
+license = "MIT"
+repository = "https://github.com/chriswk/prometheus_reqwest_remote_write"
+homepage = "https://github.com/chriswk/prometheus_request_remote_write"
+
+[dependencies]
+prometheus = "0.13.4"
+prometheus-parse = "0.2.5"
+prost = "0.13.3"
+reqwest = "0.12.8"
+snap = "1.1.1"
+tracing = "0.1.40"
+
+[dev-dependencies]
+pretty_assertions = "1.4.1"
