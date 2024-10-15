@@ -5,9 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.1.1 (2024-10-15)
+
+### Chore
+
+ - <csr-id-8398e100be7d6fcb6ea582ea78c2d3491a70271e/> remove prometheus-parse. We only support MetricFamilies
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 1 commit contributed to the release.
+ - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Remove prometheus-parse. We only support MetricFamilies ([`8398e10`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/8398e100be7d6fcb6ea582ea78c2d3491a70271e))
+</details>
+
 ## v0.1.0 (2024-10-15)
 
 <csr-id-48d7cb3d730f5fb83fe9b77c92dcd8924b22c4f7/>
+<csr-id-b71e4bfac54f6e0fdcca3e48754a1723bfcf3743/>
 
 ### Chore
 
@@ -27,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 3 commits contributed to the release.
+ - 4 commits contributed to the release.
  - 3 commits were understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
 
@@ -38,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Release prometheus-reqwest-remote-write v0.1.0 ([`36ad630`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/36ad6300a952c0f10978a15c0dd472dcde5d60e1))
     - Add changelog ([`b71e4bf`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/b71e4bfac54f6e0fdcca3e48754a1723bfcf3743))
     - Add workflow for running build ([`48d7cb3`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/48d7cb3d730f5fb83fe9b77c92dcd8924b22c4f7))
     - Can now aggregate Gauge, Counter and Histogram ([`a58402e`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/a58402e5b6b31688581a1359939e21cc8d971aaa))
