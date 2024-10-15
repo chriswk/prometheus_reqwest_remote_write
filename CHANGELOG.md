@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v0.1.0 (2024-10-15)
 
+<csr-id-48d7cb3d730f5fb83fe9b77c92dcd8924b22c4f7/>
+
 ### Chore
 
  - <csr-id-48d7cb3d730f5fb83fe9b77c92dcd8924b22c4f7/> add workflow for running build
+
+### Chore
+
+ - <csr-id-b71e4bfac54f6e0fdcca3e48754a1723bfcf3743/> add changelog
 
 ### New Features
 
@@ -21,8 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 2 commits contributed to the release.
- - 2 commits were understood as [conventional](https://www.conventionalcommits.org).
+ - 3 commits contributed to the release.
+ - 3 commits were understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
 
 ### Commit Details
@@ -32,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Add changelog ([`b71e4bf`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/b71e4bfac54f6e0fdcca3e48754a1723bfcf3743))
     - Add workflow for running build ([`48d7cb3`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/48d7cb3d730f5fb83fe9b77c92dcd8924b22c4f7))
     - Can now aggregate Gauge, Counter and Histogram ([`a58402e`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/a58402e5b6b31688581a1359939e21cc8d971aaa))
 </details>
