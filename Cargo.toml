@@ -10,7 +10,6 @@ homepage = "https://github.com/chriswk/prometheus_request_remote_write"
 
 [dependencies]
 prometheus = "0.13.4"
-prometheus-parse = "0.2.5"
 prost = "0.13.3"
 reqwest = "0.12.8"
 snap = "1.1.1"
