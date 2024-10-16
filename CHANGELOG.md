@@ -5,7 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.2.0 (2024-10-16)
+
+### Chore
+
+ - <csr-id-c336bb9415378e478d2dc3c0dd3440cc2e971fe2/> add license
+
+### New Features
+
+ - <csr-id-c8e7683aa4bb802b7d43fc636622d8077840a25a/> add possibility to add labels added to all metrics in write request
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 2 commits contributed to the release.
+ - 2 commits were understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Add possibility to add labels added to all metrics in write request ([`c8e7683`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/c8e7683aa4bb802b7d43fc636622d8077840a25a))
+    - Add license ([`c336bb9`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/c336bb9415378e478d2dc3c0dd3440cc2e971fe2))
+</details>
+
 ## v0.1.1 (2024-10-15)
+
+<csr-id-8398e100be7d6fcb6ea582ea78c2d3491a70271e/>
 
 ### Chore
 
@@ -15,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 1 commit contributed to the release.
+ - 2 commits contributed to the release.
  - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
 
@@ -26,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Release prometheus-reqwest-remote-write v0.1.1 ([`800b729`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/800b729e6ffac098bc8cf26096411114b6c1c874))
     - Remove prometheus-parse. We only support MetricFamilies ([`8398e10`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/8398e100be7d6fcb6ea582ea78c2d3491a70271e))
 </details>
 
