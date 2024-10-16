@@ -179,6 +179,7 @@ impl WriteRequest {
                             .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
                             .collect::<Vec<_>>();
                         labels.push((LABEL_NAME.to_string(), mf.get_name().to_string()));
+                        labels.extend_from_slice(&custom_labels);
                         let samples = vec![Sample {
                             value: m.get_counter().get_value(),
                             timestamp: now,
@@ -204,6 +205,9 @@ impl WriteRequest {
                             .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
                             .collect::<HashMap<String, String>>();
                         labels.insert(LABEL_NAME.to_string(), mf.get_name().to_string());
+                        custom_labels.iter().for_each(|(k, v)| {
+                            labels.insert(k.to_string(), v.to_string());
+                        });
                         m.get_summary().get_quantile().iter().for_each(|quantile| {
                             let mut our_labels = labels.clone();
                             our_labels.insert(
@@ -270,6 +274,7 @@ impl WriteRequest {
                             .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
                             .collect::<Vec<_>>();
                         labels.push((LABEL_NAME.to_string(), mf.get_name().to_string()));
+                        labels.extend_from_slice(&custom_labels);
                         let samples = vec![Sample {
                             value: m.get_untyped().get_value(),
                             timestamp: get_timestamp(),
@@ -295,7 +300,9 @@ impl WriteRequest {
                             .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
                             .collect::<HashMap<String, String>>();
                         labels.insert(LABEL_NAME.to_string(), mf.get_name().to_string());
-
+                        custom_labels.iter().for_each(|(k, v)| {
+                            labels.insert(k.to_string(), v.to_string());
+                        });
                         m.get_histogram().get_bucket().iter().for_each(|bucket| {
                             let mut our_labels = labels.clone();
                             our_labels
@@ -350,8 +357,7 @@ impl WriteRequest {
                                 })
                                 .collect(),
                         });
-                        top_level_labels
-                            .insert(LABEL_NAME.to_string(), mf.get_name().to_string());
+                        top_level_labels.insert(LABEL_NAME.to_string(), mf.get_name().to_string());
                         top_level_labels.insert("le".into(), "+Inf".into());
                         timeseries.push(TimeSeries {
                             samples: vec![Sample {
@@ -507,5 +513,37 @@ mod tests {
             .map(|ts| ts.samples.first().unwrap().value)
             .unwrap();
         assert_eq!(sum_observation, 55505.0)
+    }
+    #[test]
+    pub fn can_add_custom_labels() {
+        let registry = Registry::new();
+        let counter_name = "my_counter";
+        let help = "an extra description";
+        let counter = Counter::new(counter_name, help).unwrap();
+        registry.register(Box::new(counter.clone())).unwrap();
+        let incremented_by = 5.0;
+        counter.inc_by(incremented_by);
+        let req = WriteRequest::from_metric_families(
+            registry.gather(),
+            Some(vec![("foo".into(), "bar".into())]),
+        )
+        .expect("Failed to encode counter");
+        assert_eq!(req.timeseries.len(), 1);
+        let entry = req.timeseries.first().unwrap();
+        assert_eq!(entry.labels.len(), 2);
+        assert_eq!(
+            entry
+                .labels
+                .iter()
+                .find(|l| l.name == LABEL_NAME)
+                .unwrap()
+                .value,
+            counter_name
+        );
+        assert_eq!(
+            entry.labels.iter().find(|l| l.name == "foo").unwrap().value,
+            "bar"
+        );
+        assert_eq!(entry.samples.first().unwrap().value, incremented_by);
     }
 }
