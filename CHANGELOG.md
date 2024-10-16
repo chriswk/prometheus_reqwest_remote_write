@@ -5,7 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.2.1 (2024-10-16)
+
+### Bug Fixes
+
+ - <csr-id-3ae738c039c7d5a08dadacb0ee41be82b59a9294/> actually add custom labels for histograms, summaries and gauges
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 1 commit contributed to the release.
+ - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Actually add custom labels for histograms, summaries and gauges ([`3ae738c`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/3ae738c039c7d5a08dadacb0ee41be82b59a9294))
+</details>
+
 ## v0.2.0 (2024-10-16)
+
+<csr-id-c336bb9415378e478d2dc3c0dd3440cc2e971fe2/>
 
 ### Chore
 
@@ -19,7 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 2 commits contributed to the release.
+ - 3 commits contributed to the release.
  - 2 commits were understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
 
@@ -30,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Release prometheus-reqwest-remote-write v0.2.0 ([`b3ce210`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/b3ce2105d4de5ced9112deb288a8d17d658c9c9e))
     - Add possibility to add labels added to all metrics in write request ([`c8e7683`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/c8e7683aa4bb802b7d43fc636622d8077840a25a))
     - Add license ([`c336bb9`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/c336bb9415378e478d2dc3c0dd3440cc2e971fe2))
 </details>

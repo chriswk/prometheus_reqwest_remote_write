@@ -1,6 +1,6 @@
 [package]
 name = "prometheus-reqwest-remote-write"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 authors = ["Christopher Kolstad <chriswk@getunleash.io>"]
 description = "A prometheus remote write client for reqwest"
