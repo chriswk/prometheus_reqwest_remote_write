@@ -136,9 +136,11 @@ impl WriteRequest {
     /// Encode Prometheus metric families into a WriteRequest
     pub fn from_metric_families(
         metric_families: Vec<MetricFamily>,
+        custom_labels: Option<Vec<(String, String)>>,
     ) -> Result<Self, Box<dyn std::error::Error + Send + Sync>> {
         let mut timeseries = Vec::new();
         let now = get_timestamp();
+        let custom_labels = custom_labels.unwrap_or_default();
         metric_families
             .iter()
             .for_each(|mf| match mf.get_field_type() {
@@ -150,6 +152,8 @@ impl WriteRequest {
                             .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
                             .collect::<Vec<_>>();
                         labels.push((LABEL_NAME.to_string(), mf.get_name().to_string()));
+                        labels.extend_from_slice(&custom_labels);
+
                         let samples = vec![Sample {
                             value: m.get_gauge().get_value(),
                             timestamp: now,
@@ -347,7 +351,7 @@ impl WriteRequest {
                                 .collect(),
                         });
                         top_level_labels
-                            .insert(LABEL_NAME.to_string(), format!("{}", mf.get_name()));
+                            .insert(LABEL_NAME.to_string(), mf.get_name().to_string());
                         top_level_labels.insert("le".into(), "+Inf".into());
                         timeseries.push(TimeSeries {
                             samples: vec![Sample {
@@ -409,10 +413,10 @@ mod tests {
         registry.register(Box::new(counter.clone())).unwrap();
         let incremented_by = 5.0;
         counter.inc_by(incremented_by);
-        let req = WriteRequest::from_metric_families(registry.gather())
+        let req = WriteRequest::from_metric_families(registry.gather(), None)
             .expect("Failed to encode counter");
         assert_eq!(req.timeseries.len(), 1);
-        let entry = req.timeseries.get(0).unwrap();
+        let entry = req.timeseries.first().unwrap();
         assert_eq!(entry.labels.len(), 1);
         assert_eq!(
             entry
@@ -423,7 +427,7 @@ mod tests {
                 .value,
             counter_name
         );
-        assert_eq!(entry.samples.get(0).unwrap().value, incremented_by);
+        assert_eq!(entry.samples.first().unwrap().value, incremented_by);
     }
     #[test]
     pub fn can_encode_gauge() {
@@ -434,10 +438,10 @@ mod tests {
         registry.register(Box::new(counter.clone())).unwrap();
         let incremented_by = 5.0;
         counter.set(incremented_by);
-        let req =
-            WriteRequest::from_metric_families(registry.gather()).expect("Failed to encode gauge");
+        let req = WriteRequest::from_metric_families(registry.gather(), None)
+            .expect("Failed to encode gauge");
         assert_eq!(req.timeseries.len(), 1);
-        let entry = req.timeseries.get(0).unwrap();
+        let entry = req.timeseries.first().unwrap();
         assert_eq!(entry.labels.len(), 1);
         assert_eq!(
             entry
@@ -448,7 +452,7 @@ mod tests {
                 .value,
             gauge_name
         );
-        assert_eq!(entry.samples.get(0).unwrap().value, incremented_by);
+        assert_eq!(entry.samples.first().unwrap().value, incremented_by);
     }
     #[test]
     pub fn can_encode_histogram() {
@@ -462,7 +466,7 @@ mod tests {
         histogram.observe(500.0);
         histogram.observe(5000.0);
         histogram.observe(50000.0);
-        let req = WriteRequest::from_metric_families(registry.gather())
+        let req = WriteRequest::from_metric_families(registry.gather(), None)
             .expect("Failed to encode histogram");
         assert_eq!(req.timeseries.len(), 6);
         let bucket_names: Vec<String> = req
@@ -488,7 +492,7 @@ mod tests {
                         && label.value == format!("{}{}", histogram_name, COUNT_SUFFIX)
                 })
             })
-            .map(|ts| ts.samples.get(0).unwrap().value)
+            .map(|ts| ts.samples.first().unwrap().value)
             .unwrap();
         assert_eq!(count_observations, 4.0);
         let sum_observation = req
@@ -500,7 +504,7 @@ mod tests {
                         && label.value == format!("{}{}", histogram_name, SUM_SUFFIX)
                 })
             })
-            .map(|ts| ts.samples.get(0).unwrap().value)
+            .map(|ts| ts.samples.first().unwrap().value)
             .unwrap();
         assert_eq!(sum_observation, 55505.0)
     }
