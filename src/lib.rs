@@ -1,13 +1,17 @@
-use std::{collections::HashMap, time::SystemTime};
-
+#[cfg(feature = "prometheus")]
 use prometheus::proto::MetricFamily;
-use reqwest::Client;
+use reqwest::{
+    header::{HeaderName, HeaderValue},
+    Url,
+};
 
 /// Special label for the name of a metric.
 pub const LABEL_NAME: &str = "__name__";
-pub const CONTENT_TYPE: &str = "application/x-protobuf";
-pub const HEADER_NAME_REMOTE_WRITE_VERSION: &str = "X-Prometheus-Remote-Write-Version";
-pub const REMOTE_WRITE_VERSION_01: &str = "0.1.0";
+pub const CONTENT_TYPE: HeaderValue = HeaderValue::from_static("application/x-protobuf");
+pub const HEADER_NAME_REMOTE_WRITE_VERSION: HeaderName =
+    HeaderName::from_static("x-prometheus-remote-write-version");
+pub const REMOTE_WRITE_VERSION_01: HeaderValue = HeaderValue::from_static("0.1.0");
+pub const CONTENT_ENCODING: HeaderValue = HeaderValue::from_static("snappy");
 pub const COUNT_SUFFIX: &str = "_count";
 pub const SUM_SUFFIX: &str = "_sum";
 pub const TOTAL_SUFFIX: &str = "_total";
@@ -87,7 +91,7 @@ impl TimeSeries {
 ///   // Cortex uses this field to determine the source of the write request.
 ///   // We reserve it to avoid any compatibility issues.
 ///   reserved  2;
-
+///
 ///   // Prometheus uses this field to send metadata, but this is
 ///   // omitted from v1 of the spec as it is experimental.
 ///   reserved  3;
@@ -99,7 +103,10 @@ pub struct WriteRequest {
     pub timeseries: Vec<TimeSeries>,
 }
 
+#[cfg(feature = "prometheus")]
 fn get_timestamp() -> i64 {
+    use std::time::SystemTime;
+
     SystemTime::now()
         .duration_since(SystemTime::UNIX_EPOCH)
         .unwrap()
@@ -134,6 +141,7 @@ impl WriteRequest {
     }
 
     /// Encode Prometheus metric families into a WriteRequest
+    #[cfg(feature = "prometheus")]
     pub fn from_metric_families(
         metric_families: Vec<MetricFamily>,
         custom_labels: Option<Vec<(String, String)>>,
@@ -203,7 +211,7 @@ impl WriteRequest {
                             .get_label()
                             .iter()
                             .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
-                            .collect::<HashMap<String, String>>();
+                            .collect::<std::collections::HashMap<String, String>>();
                         labels.insert(LABEL_NAME.to_string(), mf.get_name().to_string());
                         custom_labels.iter().for_each(|(k, v)| {
                             labels.insert(k.to_string(), v.to_string());
@@ -298,7 +306,7 @@ impl WriteRequest {
                             .get_label()
                             .iter()
                             .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
-                            .collect::<HashMap<String, String>>();
+                            .collect::<std::collections::HashMap<String, String>>();
                         labels.insert(LABEL_NAME.to_string(), mf.get_name().to_string());
                         custom_labels.iter().for_each(|(k, v)| {
                             labels.insert(k.to_string(), v.to_string());
@@ -384,27 +392,26 @@ impl WriteRequest {
         Ok(s.sorted())
     }
 
-    pub fn build_http_request(
-        self,
-        client: Client,
-        endpoint: &str,
-        user_agent: &str,
-    ) -> Result<reqwest::Request, reqwest::Error> {
-        client
-            .post(endpoint)
-            .header(reqwest::header::CONTENT_TYPE, CONTENT_TYPE)
-            .header(HEADER_NAME_REMOTE_WRITE_VERSION, REMOTE_WRITE_VERSION_01)
-            .header(reqwest::header::CONTENT_ENCODING, "snappy")
-            .header(reqwest::header::USER_AGENT, user_agent)
-            .body(
-                self.encode_compressed()
-                    .expect("Failed to compress metrics data"),
-            )
-            .build()
+    pub fn build_http_request(self, endpoint: Url, user_agent: HeaderValue) -> reqwest::Request {
+        let mut request = reqwest::Request::new(reqwest::Method::POST, endpoint);
+
+        let headers = request.headers_mut();
+        headers.insert(reqwest::header::CONTENT_TYPE, CONTENT_TYPE);
+        headers.insert(HEADER_NAME_REMOTE_WRITE_VERSION, REMOTE_WRITE_VERSION_01);
+        headers.insert(reqwest::header::CONTENT_ENCODING, CONTENT_ENCODING);
+        headers.insert(reqwest::header::USER_AGENT, user_agent);
+
+        *request.body_mut() = Some(
+            self.encode_compressed()
+                .expect("Failed to compress metrics data")
+                .into(),
+        );
+
+        request
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "prometheus"))]
 mod tests {
     use super::*;
     use pretty_assertions::assert_eq;
