@@ -9,7 +9,7 @@ repository = "https://github.com/chriswk/prometheus_reqwest_remote_write"
 homepage = "https://github.com/chriswk/prometheus_request_remote_write"
 
 [dependencies]
-prometheus = "0.13"
+prometheus = { version = "0.13", optional = true }
 prost = "0.13"
 reqwest = { version = "^0.12", default-features = false }
 snap = "1"
@@ -17,3 +17,7 @@ tracing = "0.1"
 
 [dev-dependencies]
 pretty_assertions = "1.4.1"
+
+[features]
+default = ["prometheus"]
+prometheus = ["dep:prometheus"]

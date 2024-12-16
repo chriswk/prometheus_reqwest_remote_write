@@ -1,5 +1,4 @@
-use std::{collections::HashMap, time::SystemTime};
-
+#[cfg(feature = "prometheus")]
 use prometheus::proto::MetricFamily;
 use reqwest::{
     header::{HeaderName, HeaderValue},
@@ -104,7 +103,10 @@ pub struct WriteRequest {
     pub timeseries: Vec<TimeSeries>,
 }
 
+#[cfg(feature = "prometheus")]
 fn get_timestamp() -> i64 {
+    use std::time::SystemTime;
+
     SystemTime::now()
         .duration_since(SystemTime::UNIX_EPOCH)
         .unwrap()
@@ -139,6 +141,7 @@ impl WriteRequest {
     }
 
     /// Encode Prometheus metric families into a WriteRequest
+    #[cfg(feature = "prometheus")]
     pub fn from_metric_families(
         metric_families: Vec<MetricFamily>,
         custom_labels: Option<Vec<(String, String)>>,
@@ -208,7 +211,7 @@ impl WriteRequest {
                             .get_label()
                             .iter()
                             .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
-                            .collect::<HashMap<String, String>>();
+                            .collect::<std::collections::HashMap<String, String>>();
                         labels.insert(LABEL_NAME.to_string(), mf.get_name().to_string());
                         custom_labels.iter().for_each(|(k, v)| {
                             labels.insert(k.to_string(), v.to_string());
@@ -303,7 +306,7 @@ impl WriteRequest {
                             .get_label()
                             .iter()
                             .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
-                            .collect::<HashMap<String, String>>();
+                            .collect::<std::collections::HashMap<String, String>>();
                         labels.insert(LABEL_NAME.to_string(), mf.get_name().to_string());
                         custom_labels.iter().for_each(|(k, v)| {
                             labels.insert(k.to_string(), v.to_string());
@@ -408,7 +411,7 @@ impl WriteRequest {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "prometheus"))]
 mod tests {
     use super::*;
     use pretty_assertions::assert_eq;
