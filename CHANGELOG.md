@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 1 commit contributed to the release.
+ - 2 commits contributed to the release.
  - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
 
@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Release prometheus-reqwest-remote-write v0.3.0 ([`e7c932f`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/e7c932f80f99891c015935a41b1b3d8019efcef2))
     - Remove openssl dependency. Use rustls instead ([`78513fb`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/78513fb369ed7790afb6d85160eea61774e88371))
 </details>
 
