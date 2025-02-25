@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.2.1 (2024-10-16)
+## v0.3.0 (2025-02-25)
 
 ### Bug Fixes
 
- - <csr-id-3ae738c039c7d5a08dadacb0ee41be82b59a9294/> actually add custom labels for histograms, summaries and gauges
+ - <csr-id-78513fb369ed7790afb6d85160eea61774e88371/> remove openssl dependency. Use rustls instead
 
 ### Commit Statistics
 
@@ -26,6 +26,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Remove openssl dependency. Use rustls instead ([`78513fb`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/78513fb369ed7790afb6d85160eea61774e88371))
+</details>
+
+## v0.2.1 (2024-10-16)
+
+### Bug Fixes
+
+ - <csr-id-3ae738c039c7d5a08dadacb0ee41be82b59a9294/> actually add custom labels for histograms, summaries and gauges
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 2 commits contributed to the release.
+ - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Release prometheus-reqwest-remote-write v0.2.1 ([`0657641`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/0657641e15530bfe79b76c387d01b32e32529732))
     - Actually add custom labels for histograms, summaries and gauges ([`3ae738c`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/3ae738c039c7d5a08dadacb0ee41be82b59a9294))
 </details>
 
