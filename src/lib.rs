@@ -149,13 +149,13 @@ impl WriteRequest {
                         let mut labels = m
                             .get_label()
                             .iter()
-                            .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
+                            .map(|l| (l.name().to_string(), l.value().to_string()))
                             .collect::<Vec<_>>();
-                        labels.push((LABEL_NAME.to_string(), mf.get_name().to_string()));
+                        labels.push((LABEL_NAME.to_string(), mf.name().to_string()));
                         labels.extend_from_slice(&custom_labels);
 
                         let samples = vec![Sample {
-                            value: m.get_gauge().get_value(),
+                            value: m.get_gauge().value(),
                             timestamp: now,
                         }];
 
@@ -176,12 +176,12 @@ impl WriteRequest {
                         let mut labels = m
                             .get_label()
                             .iter()
-                            .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
+                            .map(|l| (l.name().to_string(), l.value().to_string()))
                             .collect::<Vec<_>>();
-                        labels.push((LABEL_NAME.to_string(), mf.get_name().to_string()));
+                        labels.push((LABEL_NAME.to_string(), mf.name().to_string()));
                         labels.extend_from_slice(&custom_labels);
                         let samples = vec![Sample {
-                            value: m.get_counter().get_value(),
+                            value: m.get_counter().value(),
                             timestamp: now,
                         }];
 
@@ -202,9 +202,9 @@ impl WriteRequest {
                         let mut labels = m
                             .get_label()
                             .iter()
-                            .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
+                            .map(|l| (l.name().to_string(), l.value().to_string()))
                             .collect::<HashMap<String, String>>();
-                        labels.insert(LABEL_NAME.to_string(), mf.get_name().to_string());
+                        labels.insert(LABEL_NAME.to_string(), mf.name().to_string());
                         custom_labels.iter().for_each(|(k, v)| {
                             labels.insert(k.to_string(), v.to_string());
                         });
@@ -212,10 +212,10 @@ impl WriteRequest {
                             let mut our_labels = labels.clone();
                             our_labels.insert(
                                 "quantile".to_string(),
-                                quantile.get_quantile().to_string(),
+                                quantile.quantile().to_string(),
                             );
                             let samples = vec![Sample {
-                                value: quantile.get_value(),
+                                value: quantile.value(),
                                 timestamp: now,
                             }];
                             timeseries.push(TimeSeries {
@@ -232,11 +232,11 @@ impl WriteRequest {
                         let mut top_level_labels = labels.clone();
                         top_level_labels.insert(
                             LABEL_NAME.to_string(),
-                            format!("{}{}", mf.get_name(), SUM_SUFFIX),
+                            format!("{}{}", mf.name(), SUM_SUFFIX),
                         );
                         timeseries.push(TimeSeries {
                             samples: vec![Sample {
-                                value: m.get_summary().get_sample_sum(),
+                                value: m.get_summary().sample_sum(),
                                 timestamp: now,
                             }],
                             labels: top_level_labels
@@ -249,11 +249,11 @@ impl WriteRequest {
                         });
                         top_level_labels.insert(
                             LABEL_NAME.to_string(),
-                            format!("{}{}", mf.get_name(), COUNT_SUFFIX),
+                            format!("{}{}", mf.name(), COUNT_SUFFIX),
                         );
                         timeseries.push(TimeSeries {
                             samples: vec![Sample {
-                                value: m.get_summary().get_sample_count() as f64,
+                                value: m.get_summary().sample_count() as f64,
                                 timestamp: now,
                             }],
                             labels: top_level_labels
@@ -266,49 +266,24 @@ impl WriteRequest {
                         });
                     });
                 }
-                prometheus::proto::MetricType::UNTYPED => {
-                    mf.get_metric().iter().for_each(|m| {
-                        let mut labels = m
-                            .get_label()
-                            .iter()
-                            .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
-                            .collect::<Vec<_>>();
-                        labels.push((LABEL_NAME.to_string(), mf.get_name().to_string()));
-                        labels.extend_from_slice(&custom_labels);
-                        let samples = vec![Sample {
-                            value: m.get_untyped().get_value(),
-                            timestamp: get_timestamp(),
-                        }];
-
-                        timeseries.push(TimeSeries {
-                            labels: labels
-                                .iter()
-                                .map(|(k, v)| Label {
-                                    name: k.to_string(),
-                                    value: v.to_string(),
-                                })
-                                .collect::<Vec<_>>(),
-                            samples,
-                        });
-                    });
-                }
+                prometheus::proto::MetricType::UNTYPED => {}
                 prometheus::proto::MetricType::HISTOGRAM => {
                     mf.get_metric().iter().for_each(|m| {
                         let mut labels = m
                             .get_label()
                             .iter()
-                            .map(|l| (l.get_name().to_string(), l.get_value().to_string()))
+                            .map(|l| (l.name().to_string(), l.value().to_string()))
                             .collect::<HashMap<String, String>>();
-                        labels.insert(LABEL_NAME.to_string(), mf.get_name().to_string());
+                        labels.insert(LABEL_NAME.to_string(), mf.name().to_string());
                         custom_labels.iter().for_each(|(k, v)| {
                             labels.insert(k.to_string(), v.to_string());
                         });
                         m.get_histogram().get_bucket().iter().for_each(|bucket| {
                             let mut our_labels = labels.clone();
                             our_labels
-                                .insert("le".to_string(), bucket.get_upper_bound().to_string());
+                                .insert("le".to_string(), bucket.upper_bound().to_string());
                             let samples = vec![Sample {
-                                value: bucket.get_cumulative_count() as f64,
+                                value: bucket.cumulative_count() as f64,
                                 timestamp: now,
                             }];
                             timeseries.push(TimeSeries {
@@ -325,7 +300,7 @@ impl WriteRequest {
                         let mut top_level_labels = labels.clone();
                         top_level_labels.insert(
                             LABEL_NAME.to_string(),
-                            format!("{}{}", mf.get_name(), SUM_SUFFIX),
+                            format!("{}{}", mf.name(), SUM_SUFFIX),
                         );
                         timeseries.push(TimeSeries {
                             samples: vec![Sample {
@@ -342,7 +317,7 @@ impl WriteRequest {
                         });
                         top_level_labels.insert(
                             LABEL_NAME.to_string(),
-                            format!("{}{}", mf.get_name(), COUNT_SUFFIX),
+                            format!("{}{}", mf.name(), COUNT_SUFFIX),
                         );
                         timeseries.push(TimeSeries {
                             samples: vec![Sample {
@@ -357,7 +332,7 @@ impl WriteRequest {
                                 })
                                 .collect(),
                         });
-                        top_level_labels.insert(LABEL_NAME.to_string(), mf.get_name().to_string());
+                        top_level_labels.insert(LABEL_NAME.to_string(), mf.name().to_string());
                         top_level_labels.insert("le".into(), "+Inf".into());
                         timeseries.push(TimeSeries {
                             samples: vec![Sample {
