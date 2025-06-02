@@ -5,17 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.3.0 (2025-02-25)
+## v0.4.0 (2025-06-02)
 
-### Bug Fixes
+### Chore
 
- - <csr-id-78513fb369ed7790afb6d85160eea61774e88371/> remove openssl dependency. Use rustls instead
+ - <csr-id-209260ddc07be6ac4566f3512c8123c8f35d4183/> Updated prometheus to 0.14.0
 
 ### Commit Statistics
 
 <csr-read-only-do-not-edit/>
 
- - 2 commits contributed to the release.
+ - 1 commit contributed to the release.
  - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
 
@@ -26,6 +26,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Updated prometheus to 0.14.0 ([`209260d`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/209260ddc07be6ac4566f3512c8123c8f35d4183))
+</details>
+
+## v0.3.0 (2025-02-25)
+
+### Bug Fixes
+
+ - <csr-id-78513fb369ed7790afb6d85160eea61774e88371/> remove openssl dependency. Use rustls instead
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 3 commits contributed to the release.
+ - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Release prometheus-reqwest-remote-write v0.3.0 ([`ccbae47`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/ccbae471f4683334926bf2f27efc14fba9ea6515))
     - Release prometheus-reqwest-remote-write v0.3.0 ([`e7c932f`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/e7c932f80f99891c015935a41b1b3d8019efcef2))
     - Remove openssl dependency. Use rustls instead ([`78513fb`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/78513fb369ed7790afb6d85160eea61774e88371))
 </details>
