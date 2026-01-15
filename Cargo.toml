@@ -9,14 +9,13 @@ repository = "https://github.com/chriswk/prometheus_reqwest_remote_write"
 homepage = "https://github.com/chriswk/prometheus_request_remote_write"
 
 [dependencies]
-prometheus = "0.14.0"
-prost = "0.13.5"
-reqwest = { version = "0.12.19", default-features = false, features = [
+prometheus = { version = "0.14.0" }
+prost = { version = "0.14.3" }
+reqwest = { version = "0.13.1", default-features = false, features = [
     "json",
-    "rustls-tls",
+    "rustls",
 ] }
-snap = "1.1.1"
-tracing = "0.1.41"
+snap = { version = "1.1.1" }
 
 [dev-dependencies]
 pretty_assertions = "1.4.1"
