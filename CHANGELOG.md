@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.4.0 (2025-06-02)
+## v0.5.0 (2026-01-15)
 
-### Chore
+### Other
 
- - <csr-id-209260ddc07be6ac4566f3512c8123c8f35d4183/> Updated prometheus to 0.14.0
+ - <csr-id-e68ae43e8f90ca09d4148b0c0cdb61061464e4e7/> Update to reqwest 0.13.1
 
 ### Commit Statistics
 
@@ -26,6 +26,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Update to reqwest 0.13.1 ([`e68ae43`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/e68ae43e8f90ca09d4148b0c0cdb61061464e4e7))
+</details>
+
+## v0.4.0 (2025-06-02)
+
+<csr-id-209260ddc07be6ac4566f3512c8123c8f35d4183/>
+
+### Chore
+
+ - <csr-id-209260ddc07be6ac4566f3512c8123c8f35d4183/> Updated prometheus to 0.14.0
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 2 commits contributed to the release.
+ - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Release prometheus-reqwest-remote-write v0.4.0 ([`035f508`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/035f508bba6d0d2150a8a8e00be364a90ad0510e))
     - Updated prometheus to 0.14.0 ([`209260d`](https://github.com/chriswk/prometheus_reqwest_remote_write/commit/209260ddc07be6ac4566f3512c8123c8f35d4183))
 </details>
 
